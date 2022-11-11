@@ -17,7 +17,7 @@ import random
 
 
 gamedisplays=pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption("Just Racing!")
+pygame.display.set_caption("Zombie Run!")
 clock=pygame.time.Clock()
 carimg=pygame.image.load('nick.png')
 backgroundpic=pygame.image.load("grama.jpg")
@@ -40,7 +40,7 @@ def intro_loop():
                 sys.exit()
         gamedisplays.blit(intro_background,(0,0))
         largetext=pygame.font.Font('freesansbold.ttf',115)
-        TextSurf,TextRect=text_objects("Just Racing!",largetext)
+        TextSurf,TextRect=text_objects("Zombie Run!",largetext)
         TextRect.center=(400,400)
         gamedisplays.blit(TextSurf,TextRect)
         button("START",150,520,100,50,blue,bright_blue,"play")
@@ -276,7 +276,7 @@ def game_loop():
     x=(display_width*0.45)
     y=(display_height*0.8)
     x_change=0
-    obstacle_speed=9
+    obstacle_speed=7
     obs=0
     y_change=0
     obs_startx=random.randrange(200,(display_width-200))
@@ -301,10 +301,10 @@ def game_loop():
                     x_change=-5
                 if event.key==pygame.K_RIGHT:
                     x_change=5
-                if event.key==pygame.K_a:
-                    obstacle_speed+=2
-                if event.key==pygame.K_b:
-                    obstacle_speed-=2
+                if event.key==pygame.K_LEFT:
+                    obstacle_speed+=0.2
+                if event.key==pygame.K_RIGHT:
+                    obstacle_speed+=0.2
             if event.type==pygame.KEYUP:
                 if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
                     x_change=0
