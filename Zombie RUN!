@@ -19,14 +19,27 @@ import random
 gamedisplays=pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption("Zombie Run!")
 clock=pygame.time.Clock()
-carimg=pygame.image.load('nick.png')
-backgroundpic=pygame.image.load("grama.jpg")
+zumbiimg=pygame.image.load('nick.png')
+backgroundpic=pygame.image.load("teste.png")
 yellow_faixa=pygame.image.load("faixaA.png") 
 faixa=pygame.image.load("faixa.jpg")
 intro_background=pygame.image.load("fundo.jpg")
 INSTRUÇÃO_fundo=pygame.image.load("fundo.jpg")
-car_width=56
+zumbi_width=56
 pause=False
+
+#musica
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.load("som.wav")
+pygame.mixer.music.play(-1)
+
+
+#som
+som_morte = pygame.mixer.Sound("crash.wav")
+
+
+
+
 
 
 
@@ -34,7 +47,7 @@ def intro_loop():
     intro=True
     while intro:
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
+            if event.type==pygame.quit:
                 pygame.quit()
                 quit()
                 sys.exit()
@@ -155,7 +168,7 @@ def countdown_background():
     gamedisplays.blit(faixa,(680,100))
     gamedisplays.blit(faixa,(680,0))
     gamedisplays.blit(faixa,(680,200))
-    gamedisplays.blit(carimg,(x,y))
+    gamedisplays.blit(zumbiimg,(x,y))
     text=font.render("DODGED: 0",True, black)
     score=font.render("SCORE: 0",True,red)
     gamedisplays.blit(text,(0,50))
@@ -211,7 +224,7 @@ def obstacle(obs_startx,obs_starty,obs):
     elif obs==1:
         obs_pic=pygame.image.load("zumbi1.png")
     elif obs==2:
-        obs_pic=pygame.image.load("zumbi2.png")
+        obs_pic=pygame.image.load("carrofogo.png")
     elif obs==3:
         obs_pic=pygame.image.load("zumbi2.png")
     elif obs==4:
@@ -228,6 +241,7 @@ def score_system(passed,score):
     score=font.render("Score"+str(score),True,red)
     gamedisplays.blit(text,(0,50))
     gamedisplays.blit(score,(0,30))
+    
 
 
 def text_objects(text,font):
@@ -240,13 +254,13 @@ def message_display(text):
     textrect.center=((display_width/2),(display_height/2))
     gamedisplays.blit(textsurf,textrect)
     pygame.display.update()
-    time.sleep(3)
+    som_morte.play()
+    time.sleep(1)
     game_loop()
 
 
 def crash():
-    message_display("Você Bateu!")
-
+    message_display("Você Morreu")
 
 def background():
     gamedisplays.blit(backgroundpic,(0,0))
@@ -268,8 +282,8 @@ def background():
     gamedisplays.blit(faixa,(680,100))
     gamedisplays.blit(faixa,(680,200))
 
-def car(x,y):
-    gamedisplays.blit(carimg,(x,y))
+def zumbi(x,y):
+    gamedisplays.blit(zumbiimg,(x,y))
 
 def game_loop():
     global pause
@@ -305,6 +319,10 @@ def game_loop():
                     obstacle_speed+=0.2
                 if event.key==pygame.K_RIGHT:
                     obstacle_speed+=0.2
+                if event.key==pygame.K_m:
+                    pygame.mixer.music.pause()
+                if event.key == pygame.K_n:
+                    pygame.mixer.music.unpause()
             if event.type==pygame.KEYUP:
                 if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
                     x_change=0
@@ -337,11 +355,11 @@ def game_loop():
         obs_starty-=(obstacle_speed/4)
         obstacle(obs_startx,obs_starty,obs)
         obs_starty+=obstacle_speed
-        car(x,y)
+        zumbi(x,y)
         score_system(passed,score)
-        if x>690-car_width or x<110:
+        if x>690-zumbi_width or x<110:
             crash()
-        if x>display_width-(car_width+110) or x<110:
+        if x>display_width-(zumbi_width+110) or x<110:
             crash()
         if obs_starty>display_height:
             obs_starty=0-obs_height
@@ -361,7 +379,7 @@ def game_loop():
 
 
         if y<obs_starty+obs_height:
-            if x > obs_startx and x < obs_startx + obs_width or x+car_width > obs_startx and x+car_width < obs_startx+obs_width:
+            if x > obs_startx and x < obs_startx + obs_width or x+zumbi_width > obs_startx and x+zumbi_width < obs_startx+obs_width:
                 crash()
         button("Pause",650,0,150,50,blue,bright_blue,"pause")
         pygame.display.update()
