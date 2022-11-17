@@ -1,13 +1,12 @@
 import pygame
 pygame.init()
 black=(0,0,0)
-red=(255,0,0)
+white=('#F8F8FF')
+red = (250,0,0)
 marrom=('#CD853F')
 cinza=('#C0C0C0')
 largura=800
 altura=600
-largura = 800
-altura = 600
 import time
 import random
 
@@ -34,14 +33,8 @@ pygame.mixer.music.play(-1)
 
 
 #som
-som_morte = pygame.mixer.Sound("crash.wav")
-
-
-
-
-
-
-
+pygame.mixer.music.set_volume(0.1)
+som_morte = pygame.mixer.Sound("som_morte.wav")
 
 
 def intro_loop():
@@ -62,7 +55,7 @@ def intro_loop():
         button("INSTRUÇÃO",300,520,200,50,marrom,cinza,"intro")
         pygame.display.update()
         cronometro.tick(50)
-
+        
 
 def button(msg,x,y,w,h,ic,ac,action=None):
     mouse=pygame.mouse.get_pos()
@@ -109,15 +102,21 @@ def introduction():
         TextSurf,TextRect=text_objects("INSTRUÇÃO",largetext)
         TextRect.center=((400),(100))
         janela.blit(TextSurf,TextRect)
-        stextSurf,stextRect=text_objects("SETA ESQUERDA : DIRECIONA PARA ESQUERDA",smalltext)
-        stextRect.center=((250),(400))
-        hTextSurf,hTextRect=text_objects("SETA DIREITA : DIRECIONA PARA DIREITA" ,smalltext)
-        hTextRect.center=((250),(450))
+        stextSurf,stextRect=text_objects("SETA DIREITA: MOVIMENTA O PERSONAGEM PARA A DIREITA",smalltext)
+        stextRect.center=((160),(400))
+        hTextSurf,hTextRect=text_objects("SETA ESQUERDA: MOVIMENTA O PERSONAGEM PARA A ESQUERDA" ,smalltext)
+        hTextRect.center=((160),(450))
+        atextSurf,atextRect=text_objects("TECLA M: MUTA O SOM",smalltext)
+        atextRect.center=((115),(500))
+        rtextSurf,rtextRect=text_objects("TECLA N: DESMUTA O SOM" ,smalltext)
+        rtextRect.center=((135),(550))
         sTextSurf,sTextRect=text_objects("CONTROLES",mediumtext)
         sTextRect.center=((350),(300))
         janela.blit(sTextSurf,sTextRect)
         janela.blit(stextSurf,stextRect)
         janela.blit(hTextSurf,hTextRect)
+        janela.blit(atextSurf,atextRect)
+        janela.blit(rtextSurf,rtextRect)
         button("BACK",600,450,100,50,marrom,cinza,"menu")
         pygame.display.update()
         cronometro.tick(30)
@@ -131,7 +130,7 @@ def paused():
                     sys.exit()
             janela.blit(INSTRUÇÃO_fundo,(0,0))
             largetext=pygame.font.Font('freesansbold.ttf',115)
-            TextSurf,TextRect=text_objects("PAUSED",largetext)
+            TextSurf,TextRect=text_objects("PAUSADO",largetext)
             TextRect.center=((largura/2),(altura/2))
             janela.blit(TextSurf,TextRect)
             button("CONTINUAR",150,450,150,50,marrom,cinza,"unpause")
@@ -170,7 +169,7 @@ def countdown_background():
     janela.blit(faixa,(680,0))
     janela.blit(faixa,(680,200))
     janela.blit(zumbiimg,(x,y))
-    score=font.render("SCORE: 0",True,red)
+    score=font.render("PONTOS: 0",True,white)
     janela.blit(score,(0,30))
     button("PAUSE",660,0,180,50,red,black,"pause")
 
@@ -236,7 +235,7 @@ def obstacle(inicio_obs,inicio_obsx,obs):
 
 def score_system(score):
     font=pygame.font.SysFont(None,25)
-    score=font.render("Score"+str(score),True,red)
+    score=font.render("PONTOS: "+str(score),True,white)
     janela.blit(score,(0,30))
     
 
@@ -299,6 +298,7 @@ def game_loop():
     score=0
     y2=7
     fps=120
+
     
     
     
