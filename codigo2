@@ -27,6 +27,15 @@ zumbi_l= 20
 zumbi_a = 20
 pause=False
 
+#musica
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.load("som.wav")
+pygame.mixer.music.play(-1)
+
+
+#som
+som_morte = pygame.mixer.Sound("crash.wav")
+
 
 
 
