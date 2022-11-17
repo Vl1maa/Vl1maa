@@ -387,3 +387,6 @@ intro_loop()
 game_loop()
 pygame.quit()
 quit()
+
+
+#Vinicius Lima, Gabriel Gimenez, João Pedro Leal
