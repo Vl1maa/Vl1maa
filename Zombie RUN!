@@ -1,5 +1,7 @@
 #Vinicius Lima, Gabriel Gimenez, João Pedro Leal
 
+#Vinicius Lima, Gabriel Gimenez, João Pedro Leal
+
 import pygame
 pygame.init()
 black=(0,0,0)
@@ -35,7 +37,7 @@ pygame.mixer.music.play(-1)
 
 
 #som
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(-1)
 som_morte = pygame.mixer.Sound("som_morte.wav")
 
 
@@ -105,13 +107,13 @@ def introduction():
         TextRect.center=((400),(100))
         janela.blit(TextSurf,TextRect)
         stextSurf,stextRect=text_objects("SETA DIREITA: MOVIMENTA O PERSONAGEM PARA A DIREITA",smalltext)
-        stextRect.center=((160),(400))
+        stextRect.center=((310),(400))
         hTextSurf,hTextRect=text_objects("SETA ESQUERDA: MOVIMENTA O PERSONAGEM PARA A ESQUERDA" ,smalltext)
-        hTextRect.center=((160),(450))
-        atextSurf,atextRect=text_objects("TECLA M: MUTA O SOM",smalltext)
-        atextRect.center=((115),(500))
-        rtextSurf,rtextRect=text_objects("TECLA N: DESMUTA O SOM" ,smalltext)
-        rtextRect.center=((135),(550))
+        hTextRect.center=((340),(450))
+        atextSurf,atextRect=text_objects("SETA PARA CIMA : DESMUTA O SOM",smalltext)
+        atextRect.center=((180),(500))
+        rtextSurf,rtextRect=text_objects("SETA PARA BAIXO: MUTA O SOM" ,smalltext)
+        rtextRect.center=((163),(550))
         sTextSurf,sTextRect=text_objects("CONTROLES",mediumtext)
         sTextRect.center=((350),(300))
         janela.blit(sTextSurf,sTextRect)
@@ -119,7 +121,7 @@ def introduction():
         janela.blit(hTextSurf,hTextRect)
         janela.blit(atextSurf,atextRect)
         janela.blit(rtextSurf,rtextRect)
-        button("BACK",600,450,100,50,marrom,cinza,"menu")
+        button("VOLTAR",600,500,100,50,marrom,cinza,"menu")
         pygame.display.update()
         cronometro.tick(30)
 def paused():
@@ -211,7 +213,7 @@ def countdown():
             janela.fill(black)
             countdown_background()
             largetext=pygame.font.Font('freesansbold.ttf',115)
-            TextSurf,TextRect=text_objects("GO!!!",largetext)
+            TextSurf,TextRect=text_objects("CORRA!!!",largetext)
             TextRect.center=((largura/2),(altura/2))
             janela.blit(TextSurf,TextRect)
             pygame.display.update()
@@ -320,9 +322,9 @@ def game_loop():
                     obstacle_speed+=0.2
                 if event.key==pygame.K_RIGHT:
                     obstacle_speed+=0.2
-                if event.key==pygame.K_m:
+                if event.key==pygame.K_DOWN:
                     pygame.mixer.music.pause()
-                if event.key == pygame.K_n:
+                if event.key == pygame.K_UP:
                     pygame.mixer.music.unpause()
             if event.type==pygame.KEYUP:
                 if event.key==pygame.K_LEFT or event.key==pygame.K_RIGHT:
@@ -389,6 +391,10 @@ intro_loop()
 game_loop()
 pygame.quit()
 quit()
+
+
+#Vinicius Lima, Gabriel Gimenez, João Pedro Leal
+
 
 
 #Vinicius Lima, Gabriel Gimenez, João Pedro Leal
