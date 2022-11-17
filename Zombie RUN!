@@ -1,3 +1,5 @@
+#Vinicius Lima, Gabriel Gimenez, João Pedro Leal
+
 import pygame
 pygame.init()
 black=(0,0,0)
