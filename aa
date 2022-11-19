@@ -128,6 +128,9 @@ def introduction():
 
 
 
+def getHighestScore():
+    with open("highest score.txt", "r") as f:
+        return f.read()
 
   
 
@@ -249,7 +252,7 @@ def score_system(score):
     font=pygame.font.SysFont(None,25)
     score=font.render("PONTOS: "+str(score),True,white)
     janela.blit(score,(0,30))
-    HighestScore=font.render("MAIOR PONTUAÇÃO: "+str(HighestScore),True,white)
+    HighestScore=font.render("MAIOR PONTUAÇÃO: "+str(getHighestScore),True,white)
     janela.blit(HighestScore,(0,50))
 
 
@@ -293,12 +296,6 @@ def getHighestScore():
     with open("highest score.txt","r") as f:
         return f.read()
 
-try:
-        highestScore = int(getHighestScore())
-except:
-        highestScore = 0
-
-
 def game_loop():
     global pause
     x=(largura*0.45)
@@ -320,6 +317,10 @@ def game_loop():
 
 
 
+    try:
+        highestScore = int(getHighestScore())
+    except:
+        highestScore = 0
 
     
 
