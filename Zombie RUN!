@@ -3,6 +3,7 @@
 #Vinicius Lima, Gabriel Gimenez, João Pedro Leal
 
 import pygame
+import os
 pygame.init()
 black=(0,0,0)
 white=('#F8F8FF')
@@ -13,7 +14,17 @@ largura=800
 altura=600
 import time
 import random
+score = 0
 
+
+zero = 0
+if not os.path.exists("rankin.dat"):
+    ado = open("ranking.dat", 'w')
+    ado.write(str(zero))
+    ado.close()
+datafile = open("ranking.dat", 'r')
+highest_scores = int(datafile.readline())
+datafile.close()
 
 
 
