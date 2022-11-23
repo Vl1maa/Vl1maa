@@ -3,7 +3,6 @@
 #Vinicius Lima, Gabriel Gimenez, João Pedro Leal
 
 import pygame
-import os
 pygame.init()
 black=(0,0,0)
 white=('#F8F8FF')
@@ -14,17 +13,8 @@ largura=800
 altura=600
 import time
 import random
-score = 0
 
 
-zero = 0
-if not os.path.exists("rankin.dat"):
-    ado = open("ranking.dat", 'w')
-    ado.write(str(zero))
-    ado.close()
-datafile = open("ranking.dat", 'r')
-highest_scores = int(datafile.readline())
-datafile.close()
 
 
 
@@ -134,6 +124,9 @@ def introduction():
         button("VOLTAR",600,500,100,50,marrom,cinza,"menu")
         pygame.display.update()
         cronometro.tick(30)
+
+
+
 def paused():
     global pause
     while pause:
@@ -177,6 +170,8 @@ def countdown_background():
     janela.blit(zumbiimg,(x,y))
     score=font.render("PONTOS: 0",True,white)
     janela.blit(score,(0,30))
+    highestScore=font.render("MAIOR PONTUAÇÃO: 0",True,white)
+    janela.blit(highestScore,(0,50))
     button("PAUSE",660,0,180,50,red,black,"pause")
 
 def countdown():
@@ -239,11 +234,14 @@ def obstacle(inicio_obs,inicio_obsx,obs):
         imagem_obs=pygame.image.load("zumbi2.png") 
     janela.blit(imagem_obs,(inicio_obs,inicio_obsx))
 
+
 def score_system(score):
     font=pygame.font.SysFont(None,25)
     score=font.render("PONTOS: "+str(score),True,white)
     janela.blit(score,(0,30))
-    
+    highestScore=font.render("MAIOR PONTUAÇÃO: "+str(""),True,white)
+    janela.blit(highestScore,(0,50))
+
 
 
 def text_objects(text,font):
@@ -281,6 +279,10 @@ def background():
 def zumbi(x,y):
     janela.blit(zumbiimg,(x,y))
 
+def gethighestScore():
+    with open("Maior Pontuação.txt","r") as f:
+        return f.read()
+
 def game_loop():
     global pause
     x=(largura*0.45)
@@ -298,6 +300,15 @@ def game_loop():
     score=0
     y2=7
     fps=120
+
+
+
+    try:
+        highestScore = int(gethighestScore())
+    except:
+        highestScore = 0
+
+    
 
     
     
@@ -374,6 +385,11 @@ def game_loop():
             if x > inicio_obs and x < inicio_obs + nick_l or x+zumbi_l > inicio_obs and x+zumbi_l < inicio_obs+nick_l:
                 crash()
         button("Pause",650,0,150,50,marrom,cinza,"pause")
+
+        if(highestScore < score):
+            highestScore = score
+        with open("Maior Pontuação.txt","w") as f:
+            f.write(str(highestScore))
         pygame.display.update()
         cronometro.tick(60)
 intro_loop()
